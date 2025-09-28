@@ -38,21 +38,24 @@ checkpointer=InMemorySaver()
 workflow = graph.compile(checkpointer=checkpointer)
 
 config1 = {"configurable": {"thread_id": "1"}}
-res=workflow.invoke({'topic':'pizza'}, config=config1)
+# res=workflow.invoke({'topic':'pizza'}, config=config1)
 
 
-print(res)
+# print(res)
 
-print("------",workflow.get_state(config1))
+# print("------",workflow.get_state(config1))
 
-config2 = {"configurable": {"thread_id": "2"}}
-res2=workflow.invoke({'topic':'pasta'}, config=config2)
+# config2 = {"configurable": {"thread_id": "2"}}
+# res2=workflow.invoke({'topic':'pasta'}, config=config2)
 
+# print(res2)
 
+# print("------",workflow.get_state(config2))
 
-print(res2)
+#Time travel
 
-print("------",workflow.get_state(config2))
+print(list(workflow.get_state_history(config1)))
 
+workflow.get_state({"configurable":{"thread_id":"1","checkpoint_id":"1f09c62a-1e44-623c-bfff-c236cae258cb"}})
 
-
+print('------',workflow.invoke(None, {"configurable":{"thread_id":"1","checkpoint_id":"1f09c62a-1e44-623c-bfff-c236cae258cb"}}))
